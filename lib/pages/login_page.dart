@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -99,6 +100,12 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       String email = _emailController.text;
                       print("Email yang dimasukkan: $email");
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xffE86A33),
@@ -201,7 +208,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 30),
 
                 Padding(
-                  padding: EdgeInsetsGeometry.symmetric(horizontal: 16.0,),
+                  padding: EdgeInsetsGeometry.symmetric(horizontal: 16.0),
                   child: Text(
                     "Dengan mengklik lanjutkan, Anda menyetujui Ketentuan Layanan dan Kebijakan Privasi kami",
                     textAlign: TextAlign.center,
