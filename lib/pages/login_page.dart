@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,12 +12,10 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void dispose() {
     _emailController.dispose();
-    _passwordController.dispose();
     super.dispose();
   }
 
@@ -51,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 40),
                 const Text(
-                  'Buat Akun',
+                  'Selamat Datang',
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -61,7 +60,8 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 8),
 
                 const Text(
-                  'Masukkan email Anda untuk mendaftar ke aplikasi ini',
+                  'Masukkan email Anda untuk masuk atau mendaftar ke aplikasi ini',
+                  textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 14, color: Colors.grey),
                 ),
                 const SizedBox(height: 30),
@@ -102,9 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                       print("Email yang dimasukkan: $email");
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => HomePage(),
-                        ),
+                        MaterialPageRoute(builder: (context) => HomePage()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -154,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                       backgroundColor: Color(0xFFF5F5F5),
                       side: BorderSide.none,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(12),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                     child: Row(
@@ -185,7 +183,7 @@ class _LoginPageState extends State<LoginPage> {
                       backgroundColor: Color(0xFFF5F5F5),
                       side: BorderSide.none,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(12),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                     child: const Row(
@@ -208,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 30),
 
                 Padding(
-                  padding: EdgeInsetsGeometry.symmetric(horizontal: 16.0),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
                     "Dengan mengklik lanjutkan, Anda menyetujui Ketentuan Layanan dan Kebijakan Privasi kami",
                     textAlign: TextAlign.center,
