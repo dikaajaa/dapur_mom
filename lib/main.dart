@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'pages/login_page.dart';
+
+import 'pages/daftar_belanja_page.dart';
+import 'theme/app_theme.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(DapurMomApp());
+  runApp(const DapurMomApp());
 }
 
 class DapurMomApp extends StatelessWidget {
@@ -12,10 +14,10 @@ class DapurMomApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "DAPUR MOM",
+      title: 'DapurMOM',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.orange),
-      home: const LoginPage(),
+      theme: AppTheme.light,
+      home: const DaftarBelanjaPage(),
     );
   }
 }
