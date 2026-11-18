@@ -1,12 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:latihan_flutter/main.dart';
+import 'package:latihan_flutter/pages/jadwal_page.dart';
 
 void main() {
   testWidgets('halaman jadwal tampil dengan benar', (
     WidgetTester tester,
   ) async {
-    await tester.pumpWidget(const DapurMomApp());
+    await tester.pumpWidget(const MaterialApp(home: JadwalPage()));
     await tester.pump();
 
     expect(find.text('Jadwal'), findsWidgets);

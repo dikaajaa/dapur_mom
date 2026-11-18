@@ -1,3 +1,5 @@
+// import 'package:app_anda/widgets/bottom_nav.dart'; // Sesuaikan path import-nya
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -111,7 +113,6 @@ class _JadwalPageState extends State<JadwalPage> {
           ],
         ),
       ),
-      bottomNavigationBar: const BottomNav(),
     );
   }
 
@@ -153,7 +154,7 @@ class _JadwalPageState extends State<JadwalPage> {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: _days.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 10),
+        separatorBuilder: (_, _) => const SizedBox(width: 10),
         itemBuilder: (context, i) {
           final selected = i == _selectedDay;
           return GestureDetector(
@@ -277,7 +278,7 @@ class MealCard extends StatelessWidget {
               width: 140,
               height: 92,
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => Container(
+              errorBuilder: (_, _, _) => Container(
                 width: 140,
                 height: 92,
                 color: kOrangeMuda,
@@ -320,67 +321,6 @@ class MealCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-// Bottom navigation dengan tombol tengah (+)
-class BottomNav extends StatelessWidget {
-  const BottomNav({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 64 + MediaQuery.of(context).padding.bottom,
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x19000000),
-            blurRadius: 4,
-            offset: Offset(0, -1),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _item(Icons.home_outlined, 'Home', false),
-          _item(Icons.calendar_month_outlined, 'Jadwal', true),
-          Container(
-            width: 46,
-            height: 46,
-            decoration: const BoxDecoration(
-              color: kOrange,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(Icons.add, color: kOrangeMuda, size: 28),
-          ),
-          _item(Icons.shopping_basket_outlined, 'Belanja', false),
-          _item(Icons.person, 'Akun', false),
-        ],
-      ),
-    );
-  }
-
-  Widget _item(IconData icon, String label, bool active) {
-    final color = active ? kOrange : Colors.black.withValues(alpha: 0.2);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, color: color, size: 24),
-        const SizedBox(height: 2),
-        Text(
-          label,
-          style: TextStyle(
-            color: color,
-            fontSize: 10,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ],
     );
   }
 }
