@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'jadwal_page.dart';
 import 'daftar_belanja_page.dart';
-// import 'akun_page.dart'; // Uncomment jika file akun sudah ada
+import 'profil_page.dart';
 import '../widgets/bottom_nav.dart'; // Sesuaikan path folder widget Anda
 
 class MainPage extends StatefulWidget {
@@ -20,7 +20,7 @@ class _MainPageState extends State<MainPage> {
     HomePage(),
     const JadwalPage(),
     const DaftarBelanjaPage(),
-    // const AkunPage(), // Masukkan halaman akun di sini jika sudah ada
+    const AkunPage()
   ];
 
   @override
