@@ -3,20 +3,19 @@ import 'package:latihan_flutter/models/menu_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
-  List<CategoryModel> categories = [];
-  List<MenuModel> menuHariIni = [];
-  
-  void _getInitialInfo() {
-    categories = CategoryModel.getCategories();
-    menuHariIni = MenuModel.getMenuHariIni();
-  }
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final List<CategoryModel> categories = CategoryModel.getCategories();
+  final List<MenuModel> menuHariIni = MenuModel.getMenuHariIni();
 
   @override
   Widget build(BuildContext context) {
-    _getInitialInfo();
     return Scaffold(
       appBar: appBar(),
       body: ListView(
@@ -34,121 +33,121 @@ class HomePage extends StatelessWidget {
 
   Column _menuHariIniSection() {
     return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Menu Hari Ini",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Color(0xff4A3428),
-                    ),
-                  ),
-                  Text(
-                    "Jum'at, 18 Sep",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xffE86A33),
-                    ),
-                  ),
-                ],
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Menu Hari Ini",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Color(0xff4A3428),
+                ),
               ),
-            ),
-            const SizedBox(height: 12),
+              Text(
+                "Jum'at, 18 Sep",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xffE86A33),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 12),
 
-            ListView.builder(
-              itemCount: menuHariIni.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              itemBuilder: (context, index) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      menuHariIni[index].waktuMakan,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xff4A3428),
+        ListView.builder(
+          itemCount: menuHariIni.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          itemBuilder: (context, index) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  menuHariIni[index].waktuMakan,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xff4A3428),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.04),
+                        blurRadius: 8,
+                        spreadRadius: 0,
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 16),
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.04),
-                            blurRadius: 8,
-                            spreadRadius: 0,
-                          ),
-                        ],
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.asset(
+                          menuHariIni[index].imagePath,
+                          width: 140,
+                          height: 80,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.asset(
-                              menuHariIni[index].imagePath,
-                              width: 140,
-                              height: 80,
-                              fit: BoxFit.cover,
+                      const SizedBox(width: 16),
+
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              menuHariIni[index].namaMenu,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff4A3428),
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 16),
-
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
                               children: [
-                                Text(
-                                  menuHariIni[index].namaMenu,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xff4A3428),
-                                  ),
+                                Icon(
+                                  Icons.access_time,
+                                  color: Color(0xffE86A33),
+                                  size: 16,
                                 ),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.access_time,
-                                      color: Color(0xffE86A33),
-                                      size: 16,
-                                    ),
-                                    const SizedBox(width: 6),
-                                    Text(
-                                      menuHariIni[index].durasi,
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
+                                const SizedBox(width: 6),
+                                Text(
+                                  menuHariIni[index].durasi,
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey,
+                                  ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ],
-        );
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ],
+    );
   }
 
   Column _categoriesSection() {
@@ -180,7 +179,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 15),
-        Container(
+        SizedBox(
           height: 100,
           child: ListView.separated(
             itemCount: categories.length,

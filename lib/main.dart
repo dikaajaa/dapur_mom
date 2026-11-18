@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pages/daftar_belanja_page.dart';
+import 'pages/login_page.dart';
 import 'theme/app_theme.dart';
 
 void main() {
@@ -17,7 +17,7 @@ class DapurMomApp extends StatelessWidget {
       title: 'DapurMOM',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      home: const DaftarBelanjaPage(),
+      home: const LoginPage(),
     );
   }
 }

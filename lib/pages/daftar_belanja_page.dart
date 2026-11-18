@@ -116,7 +116,6 @@ class _DaftarBelanjaPageState extends State<DaftarBelanjaPage> {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomNav(),
     );
   }
 
@@ -139,12 +138,15 @@ class _DaftarBelanjaPageState extends State<DaftarBelanjaPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              _period,
-              style: const TextStyle(
-                color: kBackground,
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
+            Flexible(
+              child: Text(
+                _period,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: kBackground,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
             const Icon(Icons.keyboard_arrow_down, color: kBackground, size: 20),
@@ -279,12 +281,15 @@ class _DaftarBelanjaPageState extends State<DaftarBelanjaPage> {
           children: [
             Icon(Icons.add, color: kOrangeMuda, size: 20),
             SizedBox(width: 3),
-            Text(
-              'Tambah Barang Manual',
-              style: TextStyle(
-                color: kOrangeMuda,
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
+            Flexible(
+              child: Text(
+                'Tambah Barang Manual',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: kOrangeMuda,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ],
@@ -395,63 +400,3 @@ class _ItemRow extends StatelessWidget {
   }
 }
 
-// ====== Bottom navigation (tab "Belanja" aktif) ======
-class BottomNav extends StatelessWidget {
-  const BottomNav({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final bottom = MediaQuery.of(context).padding.bottom;
-    return Container(
-      height: 64 + bottom,
-      padding: EdgeInsets.only(bottom: bottom),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x19000000),
-            blurRadius: 4,
-            offset: Offset(0, -1),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _item(Icons.home_outlined, 'Home', false),
-          _item(Icons.calendar_month_outlined, 'Jadwal', false),
-          Container(
-            width: 46,
-            height: 46,
-            decoration: const BoxDecoration(
-              color: kOrange,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(Icons.add, color: kOrangeMuda, size: 28),
-          ),
-          _item(Icons.shopping_basket_outlined, 'Belanja', true),
-          _item(Icons.person, 'Akun', false),
-        ],
-      ),
-    );
-  }
-
-  Widget _item(IconData icon, String label, bool active) {
-    final color = active ? kOrange : Colors.black.withValues(alpha: 0.2);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, color: color, size: 24),
-        const SizedBox(height: 2),
-        Text(
-          label,
-          style: TextStyle(
-            color: color,
-            fontSize: 10,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ],
-    );
-  }
-}
