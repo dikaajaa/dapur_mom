@@ -44,10 +44,10 @@ class BuatResepSendiri extends StatefulWidget {
 }
 
 class _BuatResepSendiriState extends State<BuatResepSendiri> {
-  final _namaController = TextEditingController(text: 'Ayam Suwir');
+  final _namaController = TextEditingController(text: '');
 
   final List<String> _kategoriList = ['Ayam', 'Daging', 'Ikan', 'Sayur', 'Dessert'];
-  String _kategori = 'Ayam';
+  String _kategori = 'Kategori';
 
   String _harga = 'Rp 25.000';
   String _durasi = '20 Menit';
@@ -157,8 +157,6 @@ class _BuatResepSendiriState extends State<BuatResepSendiri> {
     );
   }
 
-  // ---------- Build ----------
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -179,7 +177,6 @@ class _BuatResepSendiriState extends State<BuatResepSendiri> {
     );
   }
 
-  /// Bagian atas: gradient oranye -> orange muda, berisi app bar, foto, form
   Widget _buildHeader(BuildContext context) {
     return Container(
       width: double.infinity,
@@ -224,11 +221,9 @@ class _BuatResepSendiriState extends State<BuatResepSendiri> {
               ),
               const SizedBox(height: 16),
 
-              // Upload foto
               InkWell(
                 borderRadius: BorderRadius.circular(10),
                 onTap: () {
-                  // TODO: image_picker
                 },
                 child: Container(
                   height: 153,
@@ -256,11 +251,10 @@ class _BuatResepSendiriState extends State<BuatResepSendiri> {
               ),
               const SizedBox(height: 14),
 
-              // Nama masakan
               Row(
                 children: [
                   const SizedBox(
-                    width: 125,
+                    width: 140,
                     child: Text('Nama Masakan  :',
                         style: _labelStyle),
                   ),
@@ -281,7 +275,6 @@ class _BuatResepSendiriState extends State<BuatResepSendiri> {
               ),
               const SizedBox(height: 12),
 
-              // Kategori
               Row(
                 children: [
                   const SizedBox(
@@ -432,8 +425,6 @@ class _BuatResepSendiriState extends State<BuatResepSendiri> {
   }
 }
 
-// ---------- Style ----------
-
 const _labelStyle = TextStyle(
   color: AppColors.font,
   fontSize: 16,
@@ -445,8 +436,6 @@ const _bodyStyle = TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.w500,
 );
-
-// ---------- Reusable widgets ----------
 
 class _FieldBox extends StatelessWidget {
   final Widget child;
