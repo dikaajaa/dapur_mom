@@ -1,12 +1,9 @@
-// import 'package:app_anda/widgets/bottom_nav.dart'; // Sesuaikan path import-nya
-
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MealPlannerApp());
 }
 
-// ====== Warna ======
 const kOrange = Color(0xFFE86A33);
 const kOrangeMuda = Color(0xFFFFE4B2);
 const kBackground = Color(0xFFFDFBF7);
@@ -57,17 +54,18 @@ class _JadwalPageState extends State<JadwalPage> {
   ];
   int _selectedDay = 0;
 
-  final Meal _breakfast = const Meal(
+  // Semua slot dibuat nullable supaya bisa dihapus (null = belum ada menu)
+  Meal? _breakfast = const Meal(
     'Nasi Goreng Kampung',
     '20 Menit',
     'https://placehold.co/153x92',
   );
-  final Meal _lunch = const Meal(
+  Meal? _lunch = const Meal(
     'Ayam Kecap Manis',
     '40 Menit',
     'https://placehold.co/153x92',
   );
-  Meal? _dinner; // null = belum ada menu
+  Meal? _dinner;
 
   @override
   Widget build(BuildContext context) {
@@ -97,13 +95,44 @@ class _JadwalPageState extends State<JadwalPage> {
                     _buildDayChips(),
                     const SizedBox(height: 12),
                     _sectionTitle('Sarapan'),
-                    MealCard(meal: _breakfast),
+                    _buildMealSlot(
+                      meal: _breakfast,
+                      emptyLabel: 'Tambah Menu Sarapan',
+                      onAdd: () => setState(() {
+                        _breakfast = const Meal(
+                          'Nasi Goreng Kampung',
+                          '20 Menit',
+                          'https://placehold.co/153x92',
+                        );
+                      }),
+                      onDelete: () => setState(() => _breakfast = null),
+                    ),
                     _sectionTitle('Makan Siang'),
-                    MealCard(meal: _lunch),
+                    _buildMealSlot(
+                      meal: _lunch,
+                      emptyLabel: 'Tambah Menu Makan Siang',
+                      onAdd: () => setState(() {
+                        _lunch = const Meal(
+                          'Ayam Kecap Manis',
+                          '40 Menit',
+                          'https://placehold.co/153x92',
+                        );
+                      }),
+                      onDelete: () => setState(() => _lunch = null),
+                    ),
                     _sectionTitle('Makan Malam'),
-                    _dinner != null
-                        ? MealCard(meal: _dinner!)
-                        : _buildEmptyDinner(),
+                    _buildMealSlot(
+                      meal: _dinner,
+                      emptyLabel: 'Tambah Menu Makan Malam',
+                      onAdd: () => setState(() {
+                        _dinner = const Meal(
+                          'Sup Ayam',
+                          '30 Menit',
+                          'https://placehold.co/153x92',
+                        );
+                      }),
+                      onDelete: () => setState(() => _dinner = null),
+                    ),
                     const SizedBox(height: 20),
                     _buildShoppingButton(),
                   ],
@@ -116,7 +145,6 @@ class _JadwalPageState extends State<JadwalPage> {
     );
   }
 
-  // Bar "Minggu Ini" dengan panah kiri/kanan
   Widget _buildWeekBar() {
     return Container(
       height: 52,
@@ -198,15 +226,74 @@ class _JadwalPageState extends State<JadwalPage> {
     );
   }
 
-  Widget _buildEmptyDinner() {
+  // Menampilkan kartu menu jika ada, atau tombol tambah jika kosong
+  Widget _buildMealSlot({
+    required Meal? meal,
+    required String emptyLabel,
+    required VoidCallback onAdd,
+    required VoidCallback onDelete,
+  }) {
+    if (meal == null) {
+      return _buildEmptySlot(emptyLabel, onAdd);
+    }
+    return MealCard(
+      meal: meal,
+      onDelete: () => _confirmDelete(meal, onDelete),
+    );
+  }
+
+  // Dialog konfirmasi sebelum menghapus
+  Future<void> _confirmDelete(Meal meal, VoidCallback onDelete) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        title: const Text(
+          'Hapus Menu?',
+          style: TextStyle(
+            color: kFont,
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        content: Text(
+          'Menu "${meal.name}" akan dihapus dari jadwal.',
+          style: const TextStyle(color: kFontMuted, fontSize: 14),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Batal', style: TextStyle(color: kFontMuted)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text(
+              'Hapus',
+              style: TextStyle(color: kOrange, fontWeight: FontWeight.w700),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      onDelete();
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('"${meal.name}" dihapus dari jadwal'),
+          backgroundColor: kFont,
+          behavior: SnackBarBehavior.floating,
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
+  Widget _buildEmptySlot(String label, VoidCallback onTap) {
     return GestureDetector(
-      onTap: () => setState(() {
-        _dinner = const Meal(
-          'Sup Ayam',
-          '30 Menit',
-          'https://placehold.co/153x92',
-        );
-      }),
+      onTap: onTap,
       child: Container(
         height: 118,
         width: double.infinity,
@@ -216,14 +303,14 @@ class _JadwalPageState extends State<JadwalPage> {
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: kBorder),
         ),
-        child: const Row(
+        child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.add, color: kOrange, size: 18),
-            SizedBox(width: 4),
+            const Icon(Icons.add, color: kOrange, size: 18),
+            const SizedBox(width: 4),
             Text(
-              'Tambah Menu Makan Malam',
-              style: TextStyle(
+              label,
+              style: const TextStyle(
                 color: kOrange,
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
@@ -253,10 +340,11 @@ class _JadwalPageState extends State<JadwalPage> {
   }
 }
 
-// Kartu menu: gambar kiri, nama + durasi kanan
+// Kartu menu: gambar kiri, nama + durasi kanan, tombol hapus di pojok kanan atas
 class MealCard extends StatelessWidget {
   final Meal meal;
-  const MealCard({super.key, required this.meal});
+  final VoidCallback? onDelete;
+  const MealCard({super.key, required this.meal, this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -319,6 +407,19 @@ class MealCard extends StatelessWidget {
               ],
             ),
           ),
+          if (onDelete != null)
+            InkWell(
+              onTap: onDelete,
+              borderRadius: BorderRadius.circular(20),
+              child: const Padding(
+                padding: EdgeInsets.all(4),
+                child: Icon(
+                  Icons.delete_outline,
+                  size: 22,
+                  color: kFontMuted,
+                ),
+              ),
+            ),
         ],
       ),
     );
