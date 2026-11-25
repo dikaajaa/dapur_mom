@@ -7,11 +7,13 @@ const kOrangeMuda = Color(0xFFFFE4B2);
 class BottomNav extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
+  final VoidCallback? onAddTap;
 
   const BottomNav({
     super.key,
     required this.currentIndex,
     required this.onTap,
+    this.onAddTap,
   });
 
   @override
@@ -36,12 +38,10 @@ class BottomNav extends StatelessWidget {
         children: [
           _item(Icons.home_outlined, 'Home', 0),
           _item(Icons.calendar_month_outlined, 'Jadwal', 1),
-          
+
           // Tombol tambah (+) di tengah (opsional, bisa diberi aksi jika ditekan)
           GestureDetector(
-            onTap: () {
-              // Contoh: Buka dialog tambah menu cepat atau aksi lainnya
-            },
+            onTap: onAddTap,
             child: Container(
               width: 46,
               height: 46,
@@ -52,7 +52,7 @@ class BottomNav extends StatelessWidget {
               child: const Icon(Icons.add, color: kOrangeMuda, size: 28),
             ),
           ),
-          
+
           _item(Icons.shopping_basket_outlined, 'Belanja', 2),
           _item(Icons.person, 'Akun', 3),
         ],
@@ -64,7 +64,7 @@ class BottomNav extends StatelessWidget {
     final active = currentIndex == index;
     // Jika tab aktif berwarna oranye, jika tidak agak transparan/abu-abu
     final color = active ? kOrange : Colors.black.withValues(alpha: 0.2);
-    
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => onTap(index), // Mengirim indeks saat tab diklik ke MainPage

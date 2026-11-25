@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'home_page.dart';
 import 'jadwal_page.dart';
 import 'daftar_belanja_page.dart';
+import 'tambah_resep_page.dart';
 import 'profil_page.dart';
 import '../widgets/bottom_nav.dart'; // Sesuaikan path folder widget Anda
 
@@ -17,25 +19,28 @@ class _MainPageState extends State<MainPage> {
 
   // Daftar halaman yang diatur oleh BottomNavigationBar
   final List<Widget> _pages = [
-    HomePage(),
+    const HomePage(),
     const JadwalPage(),
     const DaftarBelanjaPage(),
-    const AkunPage()
+    const AkunPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _pages,
-      ),
+      body: IndexedStack(index: _currentIndex, children: _pages),
       bottomNavigationBar: BottomNav(
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
             _currentIndex = index;
           });
+        },
+        onAddTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const BuatResepSendiri()),
+          );
         },
       ),
     );
