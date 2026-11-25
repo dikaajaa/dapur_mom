@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(const ResepApp());
 }
-
+ 
 class AppColors {
   static const background = Color(0xFFFDFBF7);
   static const background2 = Color(0xFFF5ECE5);
@@ -47,7 +47,7 @@ class _BuatResepSendiriState extends State<BuatResepSendiri> {
   final _namaController = TextEditingController(text: '');
 
   final List<String> _kategoriList = ['Ayam', 'Daging', 'Ikan', 'Sayur', 'Dessert'];
-  String _kategori = 'Kategori';
+  String _kategori = 'Ayam';
 
   String _harga = 'Rp 25.000';
   String _durasi = '20 Menit';
