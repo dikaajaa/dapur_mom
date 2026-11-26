@@ -83,14 +83,15 @@ const nasiGoreng = Recipe(
 
 // ====== Halaman ======
 class DetailResepPage extends StatefulWidget {
-  const DetailResepPage({super.key});
+  final Recipe? recipe;
+  const DetailResepPage({super.key, this.recipe});
 
   @override
   State<DetailResepPage> createState() => _DetailResepPageState();
 }
 
 class _DetailResepPageState extends State<DetailResepPage> {
-  final Recipe recipe = nasiGoreng;
+  late final Recipe recipe = widget.recipe ?? nasiGoreng;
   bool _favorite = true;
 
   void _toast(String msg) {
@@ -138,14 +139,6 @@ class _DetailResepPageState extends State<DetailResepPage> {
                     ),
                     const SizedBox(height: 12),
                     _buildInfoRow(),
-                    const SizedBox(height: 18),
-                    Center(
-                      child: _ActionButton(
-                        icon: Icons.event_available_outlined,
-                        label: 'Tambahkan Menu ke Jadwal',
-                        onTap: () => _toast('Menu ditambahkan ke jadwal'),
-                      ),
-                    ),
                     const SizedBox(height: 18),
                     _SectionTitle(
                       icon: Icons.assignment_outlined,
@@ -224,7 +217,7 @@ class _DetailResepPageState extends State<DetailResepPage> {
           0,
           0.8,
         ), // fokus ke piring, sama seperti di Figma
-        errorBuilder: (_, __, ___) => Container(
+        errorBuilder: (_, error, stackTrace) => Container(
           color: kOrangeMuda,
           child: const Icon(Icons.restaurant, color: kOrange, size: 40),
         ),
